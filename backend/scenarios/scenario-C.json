@@ -1,0 +1,12 @@
+{
+  "scenarioId": "scenario-C",
+  "name": "Gulf of Kutch - Low Traffic",
+  "zone": "Gulf of Kutch",
+  "noiseLevel": "low",
+  "avgSpeed": 6,
+  "vesselCount": 3,
+  "sensitiveSpecies": [
+    "Humpback Dolphin"
+  ],
+  "affectedFrequencyBand": "20-1000 Hz"
+}

@@ -1,0 +1,13 @@
+{
+  "scenarioId": "scenario-B",
+  "name": "Gulf of Kutch - Medium Traffic",
+  "zone": "Gulf of Kutch",
+  "noiseLevel": "medium",
+  "avgSpeed": 12,
+  "vesselCount": 7,
+  "sensitiveSpecies": [
+    "Humpback Dolphin",
+    "Finless Porpoise"
+  ],
+  "affectedFrequencyBand": "20-1000 Hz"
+}
