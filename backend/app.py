@@ -1,17 +1,21 @@
 import os
 import json
+from datetime import datetime
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 import google.generativeai as genai
-from datetime import datetime
 
 load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+PORT = int(os.getenv("PORT", 5000))
 
 app = Flask(__name__)
 CORS(app)
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 SYSTEM_PROMPT = """You are a maritime acoustic advisor for Azhiyam AI.
@@ -21,12 +25,9 @@ Keep answers under 80 words."""
 
 FALLBACK_RESPONSES = {
     "scenario-A": "Reduce speed by 3 knots in this corridor to cut noise by approximately 40%. Avoid the marked marine mammal zone during peak hours (6-9 PM). Estimated noise reduction: 35-40%.",
-
     "scenario-B": "Maintain current speed but shift route 500m away from the sensitive zone. This can reduce acoustic impact by approximately 25% without major delays.",
-
     "scenario-C": "Current noise levels are within safe limits. Continue monitoring; no immediate action needed."
 }
-
 
 def load_scenario(scenario_id):
     file_path = os.path.join(
@@ -38,6 +39,9 @@ def load_scenario(scenario_id):
     with open(file_path, "r") as f:
         return json.load(f)
 
+@app.route("/")
+def home():
+    return "Azhiyam AI backend running ✅"
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
@@ -51,35 +55,58 @@ def chat():
 
         prompt = f"""{SYSTEM_PROMPT}
 
-Current scenario data: {json.dumps(scenario)}
-User question: {question}"""
+Current scenario data:
+{json.dumps(scenario)}
 
-        result = model.generate_content(prompt)
+User question:
+{question}
+"""
+
+        try:
+            result = model.generate_content(prompt)
+            answer = result.text
+            source = "gemini"
+
+        except Exception as gemini_error:
+            print("Gemini error:", gemini_error)
+
+            answer = FALLBACK_RESPONSES.get(
+                scenario_id,
+                "Consider reducing speed in sensitive zones."
+            )
+
+            source = "fallback"
 
         return jsonify({
-            "answer": result.text,
-            "scenarioUsed": scenario["name"]
+            "answer": answer,
+            "scenarioUsed": scenario["name"],
+            "responseSource": source
         })
 
     except Exception as e:
-        print(e)
+        print("Chat server error:", e)
 
         return jsonify({
             "error": "Something went wrong with the copilot."
         }), 500
 
-
 @app.route("/api/report", methods=["POST"])
 def report():
     try:
         data = request.get_json()
+
         scenario_id = data.get("scenarioId", "scenario-A")
-        copilot_answer = data.get("copilotAnswer", "No specific recommendation available.")
+
+        copilot_answer = data.get(
+            "copilotAnswer",
+            "No specific recommendation available."
+        )
 
         scenario = load_scenario(scenario_id)
 
         report_data = {
             "title": f"Compliance Report - {scenario['name']}",
+            "project": "Azhiyam AI",
             "zone": scenario["zone"],
             "noiseLevel": scenario["noiseLevel"],
             "avgSpeed": scenario["avgSpeed"],
@@ -88,11 +115,23 @@ def report():
             "affectedFrequencyBand": scenario["affectedFrequencyBand"],
             "recommendation": copilot_answer,
             "estimatedNoiseReduction": "25-40%",
-            "generatedAt": "auto-timestamp-here"
+            "generatedAt": datetime.now().isoformat()
         }
 
         return jsonify(report_data)
 
     except Exception as e:
-        print(e)
-        return jsonify({"error": "Could not generate report."}), 500
+        print("Report error:", e)
+
+        return jsonify({
+            "error": "Could not generate report."
+        }), 500
+
+if __name__ == "__main__":
+    print("Starting Aazhiyam AI backend...")
+
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=PORT
+    )
