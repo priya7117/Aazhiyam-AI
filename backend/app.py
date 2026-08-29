@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-3.6-flash")
 
 SYSTEM_PROMPT = """You are a maritime acoustic advisor for Azhiyam AI.
 Give short, specific, numeric recommendations for reducing underwater noise in sensitive ocean zones.
@@ -29,6 +29,7 @@ FALLBACK_RESPONSES = {
     "scenario-C": "Current noise levels are within safe limits. Continue monitoring; no immediate action needed."
 }
 
+
 def load_scenario(scenario_id):
     file_path = os.path.join(
         os.path.dirname(__file__),
@@ -39,12 +40,15 @@ def load_scenario(scenario_id):
     with open(file_path, "r") as f:
         return json.load(f)
 
+
 @app.route("/")
 def home():
     return "Azhiyam AI backend running ✅"
 
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
+    debug_error = None
     try:
         data = request.get_json()
 
@@ -76,19 +80,23 @@ User question:
             )
 
             source = "fallback"
+            debug_error = str(gemini_error)
 
         return jsonify({
             "answer": answer,
             "scenarioUsed": scenario["name"],
-            "responseSource": source
+            "responseSource": source,
+            "debugError": debug_error
         })
 
     except Exception as e:
         print("Chat server error:", e)
 
         return jsonify({
-            "error": "Something went wrong with the copilot."
+            "error": "Something went wrong with the copilot.",
+            "debugError": str(e)
         }), 500
+
 
 @app.route("/api/report", methods=["POST"])
 def report():
@@ -126,6 +134,7 @@ def report():
         return jsonify({
             "error": "Could not generate report."
         }), 500
+
 
 if __name__ == "__main__":
     print("Starting Aazhiyam AI backend...")
