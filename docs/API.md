@@ -1,75 +1,45 @@
-# Aazhiyam-AI Backend API
+# Aazhiyam AI Backend API
 
-## Base URL
+Base URL (local): http://localhost:5000
 
-http://localhost:5000
-
-## Health Check
-
-GET /
-
-Response:
-
-Aazhiyam AI backend running
-
-## Copilot Chat
-
-POST /api/chat
-
+## POST /api/chat
 Request:
-
 {
-  "question": "Suggest a quiet path for ships here.",
-  "scenarioId": "scenario-A"
+  "question": "string",
+  "scenarioId": "scenario-A" | "scenario-B" | "scenario-C"
 }
 
 Response:
-
 {
-  "answer": "Reduce speed by 3 knots in this corridor to cut noise by approximately 40%.",
-  "scenarioUsed": "Gulf of Kutch - High Traffic",
-  "responseSource": "fallback"
+  "answer": "string",
+  "scenarioUsed": "string",
+  "responseSource": "gemini" | "fallback",
+  "debugError": "string or null"
 }
 
-## Compliance Report
-
-POST /api/report
-
+## POST /api/report
 Request:
-
 {
   "scenarioId": "scenario-A",
-  "copilotAnswer": "Reduce speed by 3 knots to reduce underwater acoustic impact."
+  "copilotAnswer": "string"
 }
 
 Response:
-
 {
-  "title": "Compliance Report - Gulf of Kutch - High Traffic",
-  "project": "Aazhiyam AI",
-  "zone": "Gulf of Kutch",
-  "noiseLevel": "high",
-  "avgSpeed": 18,
-  "vesselCount": 12,
-  "sensitiveSpecies": [
-    "Humpback Dolphin",
-    "Finless Porpoise"
-  ],
-  "affectedFrequencyBand": "20-1000 Hz",
-  "recommendation": "Reduce speed by 3 knots to reduce underwater acoustic impact.",
-  "estimatedNoiseReduction": "25-40%",
-  "generatedAt": "2026-08-29T14:52:28"
+  "title": "string",
+  "project": "Azhiyam AI",
+  "zone": "string",
+  "noiseLevel": "string",
+  "avgSpeed": number,
+  "vesselCount": number,
+  "sensitiveSpecies": ["string"],
+  "affectedFrequencyBand": "string",
+  "recommendation": "string",
+  "estimatedNoiseReduction": "string",
+  "generatedAt": "ISO timestamp"
 }
 
-## Supported Scenarios
-
-scenario-A
-scenario-B
-scenario-C
-
-## Backend Status
-
-Flask backend: Active
-Report API: Active
-Fallback system: Active
-Gemini: Temporarily parked
+## Available Scenario IDs
+- scenario-A (Gulf of Kutch - High Traffic)
+- scenario-B
+- scenario-C
