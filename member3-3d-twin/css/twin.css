@@ -1,0 +1,98 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0a1628; font-family: 'Inter', system-ui, sans-serif; }
+#scene-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; }
+#scene-container canvas { display: block; }
+
+.panel {
+  background: rgba(10, 22, 40, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 12px;
+  color: #eaf6ff;
+  padding: 14px 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+#top-ui {
+  position: fixed; top: 16px; left: 20px; right: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  pointer-events: none;
+}
+#topbar {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  width: 100%; gap: 16px;
+  pointer-events: none;
+}
+#topbar .panel { pointer-events: auto; }
+
+#legend { min-width: 190px; flex: 0 0 auto; }
+#legend h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #7fd8ff; margin-bottom: 10px; }
+.legend-row { display: flex; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 7px; color: #d6ecff; }
+.legend-row:last-child { margin-bottom: 0; }
+.legend-dot { width: 11px; height: 11px; border-radius: 50%; box-shadow: 0 0 8px currentColor; flex-shrink: 0; }
+
+#metrics { min-width: 210px; flex: 0 0 auto; }
+#metrics h3 { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #7fd8ff; margin-bottom: 10px; }
+.metric-row { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; margin-bottom: 8px; color: #d6ecff; }
+.metric-row:last-child { margin-bottom: 0; }
+.metric-row span:last-child { font-weight: 600; color: #ffffff; }
+.metric-badge { display: inline-block; padding: 1px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+
+#timeline {
+  position: fixed;
+  bottom: 20px; left: 50%; transform: translateX(-50%);
+  width: min(560px, 86vw);
+  display: flex; align-items: center; gap: 14px;
+}
+#timeline input[type=range] {
+  flex: 1; height: 4px; -webkit-appearance: none; appearance: none;
+  background: linear-gradient(90deg, #00d4ff, rgba(0,212,255,0.15));
+  border-radius: 4px; outline: none; cursor: pointer;
+}
+#timeline input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #00d4ff; box-shadow: 0 0 10px #00d4ff; cursor: pointer;
+  border: 2px solid #0a1628;
+}
+#timeline-label { font-size: 12px; color: #9fdfff; min-width: 78px; text-align: right; }
+#play-btn {
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(0,212,255,0.5);
+  background: rgba(0,212,255,0.1); color: #eaf6ff; cursor: pointer; font-size: 12px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+#play-btn:hover { background: rgba(0,212,255,0.25); }
+
+#tooltip {
+  position: fixed; pointer-events: none; display: none;
+  background: rgba(6, 16, 30, 0.92);
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  border-radius: 8px; padding: 10px 14px; color: #eaf6ff;
+  font-size: 12px; z-index: 20; min-width: 150px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+#tooltip .t-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #ffffff; }
+#tooltip .t-row { display: flex; justify-content: space-between; gap: 16px; color: #b9dcf5; margin-top: 2px; }
+
+#title-tag { text-align: center; pointer-events: none; }
+#title-tag h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase; }
+#title-tag p { font-size: 11px; color: #7fd8ff; letter-spacing: 0.05em; margin-top: 2px; }
+
+#hint {
+  position: fixed; bottom: 68px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; color: rgba(214, 236, 255, 0.55); pointer-events: none;
+}
+
+#marine-panel {
+  flex: 1 1 auto; max-width: 420px;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 12px 18px;
+}
+#marine-panel h3 {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #7fd8ff; white-space: nowrap;
+}
+.species-row { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.species-chip { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #d6ecff; white-space: nowrap; }
+.species-dot { width: 8px; height: 8px; border-radius: 50%; background: #7fd8ff; flex-shrink: 0; }
