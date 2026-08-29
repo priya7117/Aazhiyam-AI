@@ -1,12 +1,10 @@
-{
-  "scenarioId": "scenario-C",
-  "name": "Gulf of Kutch - Low Traffic",
-  "zone": "Gulf of Kutch",
-  "noiseLevel": "low",
-  "avgSpeed": 6,
-  "vesselCount": 3,
-  "sensitiveSpecies": [
-    "Humpback Dolphin"
-  ],
-  "affectedFrequencyBand": "20-1000 Hz"
-}
+$body = @{
+    scenarioId = "scenario-C"
+    copilotAnswer = "Noise levels are within safe limits. Continue monitoring."
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+    -Uri "http://localhost:5000/api/report" `
+    -Method Post `
+    -ContentType "application/json" `
+    -Body $body
