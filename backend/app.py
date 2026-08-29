@@ -140,7 +140,7 @@ if __name__ == "__main__":
     print("Starting Aazhiyam-AI backend...")
 
     app.run(
-        debug=True,
-        host="127.0.0.1",
+        debug=False,
+        host="0.0.0.0",
         port=PORT
     )
