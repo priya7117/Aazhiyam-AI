@@ -1,10 +1,13 @@
-$body = @{
-    scenarioId = "scenario-B"
-    copilotAnswer = "Shift route 500m from the sensitive zone to reduce acoustic impact by approximately 25%."
-} | ConvertTo-Json
-
-Invoke-RestMethod `
-    -Uri "http://localhost:5000/api/report" `
-    -Method Post `
-    -ContentType "application/json" `
-    -Body $body
+{
+  "scenarioId": "scenario-B",
+  "name": "Palk Bay - Moderate Traffic",
+  "zone": "Palk Bay",
+  "noiseLevel": "moderate",
+  "avgSpeed": 12,
+  "vesselCount": 6,
+  "sensitiveSpecies": [
+    "Dugong",
+    "Olive Ridley Turtle"
+  ],
+  "affectedFrequencyBand": "50-800 Hz"
+}

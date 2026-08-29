@@ -18,7 +18,7 @@ CORS(app)
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-3.6-flash")
 
-SYSTEM_PROMPT = """You are a maritime acoustic advisor for Azhiyam AI.
+SYSTEM_PROMPT = """You are a maritime acoustic advisor for Aazhiyam-AI.
 Give short, specific, numeric recommendations for reducing underwater noise in sensitive ocean zones.
 Always mention: suggested speed change (in knots), approximate % noise reduction, and any sensitive species/zone if relevant.
 Keep answers under 80 words."""
@@ -43,7 +43,7 @@ def load_scenario(scenario_id):
 
 @app.route("/")
 def home():
-    return "Azhiyam AI backend running ✅"
+    return "Aazhiyam-AI backend running ✅"
 
 
 @app.route("/api/chat", methods=["POST"])
@@ -114,7 +114,7 @@ def report():
 
         report_data = {
             "title": f"Compliance Report - {scenario['name']}",
-            "project": "Azhiyam AI",
+            "project": "Aazhiyam-AI",
             "zone": scenario["zone"],
             "noiseLevel": scenario["noiseLevel"],
             "avgSpeed": scenario["avgSpeed"],
@@ -137,7 +137,7 @@ def report():
 
 
 if __name__ == "__main__":
-    print("Starting Aazhiyam AI backend...")
+    print("Starting Aazhiyam-AI backend...")
 
     app.run(
         debug=True,

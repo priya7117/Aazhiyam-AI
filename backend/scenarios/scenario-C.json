@@ -1,10 +1,14 @@
-$body = @{
-    scenarioId = "scenario-C"
-    copilotAnswer = "Noise levels are within safe limits. Continue monitoring."
-} | ConvertTo-Json
-
-Invoke-RestMethod `
-    -Uri "http://localhost:5000/api/report" `
-    -Method Post `
-    -ContentType "application/json" `
-    -Body $body
+{
+  "scenarioId": "scenario-C",
+  "name": "Andaman Sea - Protected Zone",
+  "zone": "Andaman Sea",
+  "noiseLevel": "low",
+  "avgSpeed": 8,
+  "vesselCount": 3,
+  "sensitiveSpecies": [
+    "Irrawaddy Dolphin",
+    "Dugong",
+    "Saltwater Crocodile"
+  ],
+  "affectedFrequencyBand": "10-500 Hz"
+}
