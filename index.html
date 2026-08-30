@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aazhiyam AI — Marine Acoustic Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="#app" class="skip-link">Skip to content</a>
+
+<header class="topbar">
+  <div class="wordmark"><svg class="dot" viewBox="0 0 32 32" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hullGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fe8f7"/><stop offset="45%" stop-color="#2dd4ee"/><stop offset="100%" stop-color="#0b7f96"/></linearGradient><linearGradient id="deckGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#eaf6fa"/><stop offset="100%" stop-color="#a8cdd8"/></linearGradient><linearGradient id="waterGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0891b2" stop-opacity="0.35"/><stop offset="100%" stop-color="#0891b2" stop-opacity="0"/></linearGradient></defs><path d="M4 22c1.4 1.3 2.8 1.3 4.2 0 1.4-1.3 2.8-1.3 4.2 0 1.4 1.3 2.8 1.3 4.2 0 1.4-1.3 2.8-1.3 4.2 0 1.4 1.3 2.8 1.3 4.2 0" stroke="#2dd4ee" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.55"/><path d="M6 19l1.8-7.5h16.4L26 19l-2.5 2.6H8.5z" fill="url(#hullGrad)" stroke="#075a6b" stroke-width="0.6"/><rect x="8" y="11.5" width="16" height="1.4" fill="url(#deckGrad)"/><rect x="13.5" y="6" width="6" height="5.8" rx="0.6" fill="url(#deckGrad)" stroke="#5c8a94" stroke-width="0.4"/><rect x="14.4" y="7.1" width="1.5" height="1.6" fill="#0b2b3d" opacity="0.6"/><rect x="17" y="7.1" width="1.5" height="1.6" fill="#0b2b3d" opacity="0.6"/><rect x="18.6" y="2.4" width="1.1" height="4" fill="#5c8a94"/><path d="M2 22c2 1.6 4 1.6 6 0" stroke="url(#waterGrad)" stroke-width="2" fill="none" opacity="0.8"/></svg>AAZHIYAM AI</div>
+
+  <nav class="nav-public" id="navPublic">
+    <button data-goto="landing" class="navlink active">Home</button>
+    <button data-goto="how" class="navlink">How It Works</button>
+  </nav>
+
+  <nav class="nav-protected" id="navProtected" hidden>
+    <button data-goto="dashboard" class="navlink">Dashboard</button>
+    <button data-goto="analysis" class="navlink">Analysis</button>
+    <button data-goto="twin" class="navlink">Digital Twin</button>
+    <button data-goto="copilot" class="navlink">AI Copilot</button>
+    <button data-goto="reports" class="navlink">Reports</button>
+  </nav>
+
+  <div class="topbar-right">
+    <span class="status-chip" id="authStatus"><span class="dot"></span>Public access</span>
+    <button class="btn btn-primary" id="authActionBtn">Authorized Access</button>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ===================== PUBLIC: LANDING ===================== -->
+  <section class="screen active" id="screen-landing" data-screen="landing">
+    <div class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow">Marine acoustic intelligence</span>
+        <h1>Hear what the ocean is telling you.</h1>
+        <p>Aazhiyam AI classifies underwater vessel noise, visualizes acoustic impact across shipping corridors, and helps port authorities and conservation teams protect marine life.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-goto="how">How It Works</button>
+          <button class="btn" data-action="request-access">Authorized Access</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="eyebrow">Why it matters</span>
+        <h2>Underwater noise is a growing threat to marine life</h2>
+        <p>Whales, dolphins, and fish rely on sound to navigate, feed, and communicate. Shipping noise can mask those signals across kilometers of ocean.</p>
+      </div>
+      <div class="cards">
+        <div class="card" tabindex="0" role="button" aria-label="Flip card for details">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="icon">◐</div>
+              <h3>Acoustic classification</h3>
+              <p>Hydrophone audio is scored against vessel-noise signatures to return a precise frequency reading and severity status.</p>
+            </div>
+            <div class="card-face card-back">
+              <h3>How it works</h3>
+              <p>A spectrogram is extracted from the clip and scored against known vessel-noise signatures, returning a frequency in Hz and a Normal/Elevated/Extreme severity label — never a color alone.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card" tabindex="0" role="button" aria-label="Flip card for details">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="icon">◭</div>
+              <h3>Digital twin visualization</h3>
+              <p>Vessels and their acoustic footprints render on a live corridor scene, showing exactly where impact concentrates.</p>
+            </div>
+            <div class="card-face card-back">
+              <h3>How it works</h3>
+              <p>Each tracked vessel is rendered with concentric acoustic rings that pulse in real time, colored by severity so hotspots in the corridor are visible at a glance.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card" tabindex="0" role="button" aria-label="Flip card for details">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="icon">▤</div>
+              <h3>Compliance reporting</h3>
+              <p>Authorized officials generate audit-ready reports combining readings, visuals, and recommendations.</p>
+            </div>
+            <div class="card-face card-back">
+              <h3>How it works</h3>
+              <p>A signed-in official can compile the current analysis, vessel data, and a digital twin snapshot into a printable report in one click.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PUBLIC: HOW IT WORKS ===================== -->
+  <section class="screen" id="screen-how" data-screen="how">
+    <div class="section">
+      <button class="btn btn-ghost" data-goto="landing">← Back to home</button>
+      <div class="section-head" style="margin-top:20px;">
+        <span class="eyebrow">How it works</span>
+        <h2>From hydrophone audio to a protected quiet path</h2>
+      </div>
+      <ol class="steps">
+        <li><b>Capture.</b> A hydrophone records underwater sound in a monitored corridor.</li>
+        <li><b>Classify.</b> An on-device model scores the clip and returns a frequency and severity level.</li>
+        <li><b>Visualize.</b> A digital twin shows vessels and their acoustic footprint in real time.</li>
+        <li><b>Advise.</b> An AI copilot suggests speed and route adjustments to reduce impact.</li>
+        <li><b>Report.</b> Authorized officials generate a compliance snapshot for records or regulators.</li>
+      </ol>
+      <div class="hero-actions" style="margin-top:28px;">
+        <button class="btn btn-primary" data-action="request-access">Authorized Access</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROTECTED: DASHBOARD ===================== -->
+  <section class="screen" id="screen-dashboard" data-screen="dashboard" data-protected="true">
+    <div class="section">
+      <div class="section-head">
+        <span class="eyebrow">Official dashboard</span>
+        <h2>Monitoring overview</h2>
+      </div>
+
+      <div class="dash-grid">
+        <div class="glass dash-card">
+          <span class="dash-label">Monitoring status</span>
+          <span class="dash-value" id="dashMonitoringStatus">Standing by</span>
+        </div>
+        <div class="glass dash-card">
+          <span class="dash-label">Active scenario</span>
+          <span class="dash-value" id="dashScenario">No scenario loaded</span>
+        </div>
+        <div class="glass dash-card">
+          <span class="dash-label">Current classification</span>
+          <span class="dash-value" id="dashClassification">No analysis yet</span>
+        </div>
+        <div class="glass dash-card">
+          <span class="dash-label">Vessels detected</span>
+          <span class="dash-value" id="dashVesselCount">—</span>
+        </div>
+      </div>
+
+      <div class="glass" style="padding:24px;margin-top:20px;">
+        <h3 style="margin-bottom:14px;font-size:15.5px;">Quick actions</h3>
+        <div class="quick-actions">
+          <button class="btn btn-primary" data-goto="analysis">Start Analysis</button>
+          <button class="btn" data-goto="twin">Open Digital Twin</button>
+          <button class="btn" data-goto="copilot">Open AI Copilot</button>
+          <button class="btn" data-goto="reports">Generate Report</button>
+        </div>
+      </div>
+
+      <div class="glass" style="padding:24px;margin-top:20px;" id="dashRecentWrap">
+        <h3 style="margin-bottom:10px;font-size:15.5px;">Most recent analysis</h3>
+        <p class="muted" id="dashRecentText">No analysis has been run this session.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROTECTED: ANALYSIS ===================== -->
+  <section class="screen" id="screen-analysis" data-screen="analysis" data-protected="true">
+    <div class="section">
+      <button class="btn btn-ghost" data-goto="dashboard">← Back to dashboard</button>
+      <div class="section-head" style="margin-top:20px;">
+        <span class="eyebrow">Step 1</span>
+        <h2>Audio analysis</h2>
+        <p>Upload a hydrophone clip or run a preset scenario.</p>
+      </div>
+
+      <div class="glass upload-card">
+        <div id="dropZone" class="file-drop" tabindex="0" role="button" aria-label="Upload audio file">
+          <span class="fico">⏏</span>
+          <div>
+            <span class="fname" id="fileName">Drag & drop audio, or click to browse</span><br>
+            <span class="fhint">WAV or MP3 · up to 10MB</span>
+          </div>
+          <button class="btn btn-ghost" id="removeFileBtn" hidden type="button">Remove</button>
+        </div>
+        <input type="file" id="audio-file-input" accept="audio/*" class="sr-only">
+
+        <div class="preset-row">
+          <span class="fhint">Or run a preset scenario:</span>
+          <button class="btn" data-preset="High Traffic Lane">High Traffic Lane</button>
+          <button class="btn" data-preset="Moderate Shipping Zone">Moderate Shipping Zone</button>
+          <button class="btn" data-preset="Quiet Sanctuary">Quiet Sanctuary</button>
+        </div>
+
+        <div class="upload-state idle" id="upload-status" aria-live="polite">No file selected yet.</div>
+      </div>
+
+      <div class="glass result-card" id="classification-result" style="margin-top:18px;">
+        <span id="result-label">No audio analyzed yet</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROTECTED: DIGITAL TWIN ===================== -->
+  <section class="screen" id="screen-twin" data-screen="twin" data-protected="true">
+    <div class="section">
+      <button class="btn btn-ghost" data-goto="dashboard">← Back to dashboard</button>
+      <div class="section-head" style="margin-top:20px;">
+        <span class="eyebrow">Step 2</span>
+        <h2>Digital twin — acoustic monitoring</h2>
+      </div>
+
+      <div class="twin-layout">
+        <div class="glass monitor">
+          <div class="monitor-top">
+            <h3><span class="live-dot"></span>Corridor view</h3>
+            <div class="legend">
+              <span><i style="background:#1fbf9e;"></i>Normal</span>
+              <span><i style="background:#f2a53c;"></i>Elevated</span>
+              <span><i style="background:#f0554a;"></i>Extreme</span>
+            </div>
+            <button class="btn btn-ghost" id="fullscreenBtn">⛶ Fullscreen</button>
+          </div>
+          <div id="scene-wrap">
+            <div id="scene-container"></div>
+            <div id="sceneUnavailable" class="scene-fallback" hidden>
+              Digital Twin module not loaded — waiting on Member 3's <code>scene3d.js</code>.
+            </div>
+          </div>
+        </div>
+
+        <div class="glass vessel-list" id="vesselList">
+          <h3 style="font-size:14.5px;margin-bottom:12px;">Vessels in scene</h3>
+          <div id="vesselListBody" class="muted">Loading scene data…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROTECTED: AI COPILOT ===================== -->
+  <section class="screen" id="screen-copilot" data-screen="copilot" data-protected="true">
+    <div class="section">
+      <button class="btn btn-ghost" data-goto="dashboard">← Back to dashboard</button>
+      <div class="section-head" style="margin-top:20px;">
+        <span class="eyebrow">Step 3</span>
+        <h2>AI Copilot</h2>
+        <p>Ask about the current corridor, sensitive zones, or quiet-path options.</p>
+      </div>
+
+      <div class="glass copilot-panel">
+        <div class="copilot-head">
+          <span class="muted" id="copilotContext">No analysis loaded — answers will be general.</span>
+          <button class="btn btn-ghost" id="clearChatBtn">Clear chat</button>
+        </div>
+
+        <div class="chat-body" id="chat-window" aria-live="polite"></div>
+
+        <div class="suggested-row" id="suggestedRow">
+          <button class="chip" data-q="Which areas are most sensitive to noise?">Which areas are most sensitive to noise?</button>
+          <button class="chip" data-q="Which vessel has the highest acoustic impact?">Highest acoustic impact vessel?</button>
+          <button class="chip" data-q="How can noise be reduced in this scenario?">How can noise be reduced?</button>
+          <button class="chip" data-q="Suggest a quieter route.">Suggest a quieter route</button>
+        </div>
+
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Ask about noise, routes, or species…" aria-label="Ask the copilot">
+          <button class="btn btn-primary" id="chat-send-btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROTECTED: REPORT CENTER ===================== -->
+  <section class="screen" id="screen-reports" data-screen="reports" data-protected="true">
+    <div class="section">
+      <button class="btn btn-ghost" data-goto="dashboard">← Back to dashboard</button>
+      <div class="section-head" style="margin-top:20px;">
+        <span class="eyebrow">Step 4</span>
+        <h2>Report center</h2>
+      </div>
+
+      <div class="glass report-summary" id="reportSummary">
+        <p class="muted" id="reportSummaryText">Run an analysis to enable report generation.</p>
+      </div>
+
+      <div class="glass" style="padding:24px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h3 style="font-size:15.5px;margin-bottom:6px;">Compliance snapshot</h3>
+          <p class="muted" style="max-width:420px;font-size:13.5px;">Includes analysis result, vessel data, digital twin snapshot, and the latest copilot recommendation.</p>
+          <span class="report-status" id="report-status" aria-live="polite"></span>
+        </div>
+        <button id="generate-report-btn" class="btn btn-primary" disabled title="Run an analysis first">Generate Report</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== LOGIN MODAL ===================== -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Official sign in">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close sign in">✕</button>
+    <h3>Official sign in</h3>
+    <p class="sub">Authorized personnel only. Enter official credentials to access protected features.</p>
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Official email</label>
+        <input type="email" id="email" placeholder="name@agency.gov" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <div class="field-error" id="loginError" role="alert"></div>
+      <button type="submit" class="btn btn-primary" id="loginSubmit" style="width:100%;">Sign in</button>
+      <p class="modal-note">This interface is structured to call a secure backend authentication endpoint. Until that endpoint is connected by Member 4, this cannot verify real credentials — do not treat it as production-secure.</p>
+    </form>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<footer>Aazhiyam AI — Marine Acoustic Intelligence Platform</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/audioUpload.js"></script>
+<script src="js/classifier.js"></script>
+<script src="js/scene3d.js"></script>
+<script src="js/chat.js"></script>
+<script src="js/report.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
