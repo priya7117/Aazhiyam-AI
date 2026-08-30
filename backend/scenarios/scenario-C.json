@@ -1,0 +1,14 @@
+{
+  "scenarioId": "scenario-C",
+  "name": "Andaman Sea - Protected Zone",
+  "zone": "Andaman Sea",
+  "noiseLevel": "low",
+  "avgSpeed": 8,
+  "vesselCount": 3,
+  "sensitiveSpecies": [
+    "Irrawaddy Dolphin",
+    "Dugong",
+    "Saltwater Crocodile"
+  ],
+  "affectedFrequencyBand": "10-500 Hz"
+}

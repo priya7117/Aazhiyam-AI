@@ -1,0 +1,13 @@
+{
+  "scenarioId": "scenario-B",
+  "name": "Palk Bay - Moderate Traffic",
+  "zone": "Palk Bay",
+  "noiseLevel": "moderate",
+  "avgSpeed": 12,
+  "vesselCount": 6,
+  "sensitiveSpecies": [
+    "Dugong",
+    "Olive Ridley Turtle"
+  ],
+  "affectedFrequencyBand": "50-800 Hz"
+}

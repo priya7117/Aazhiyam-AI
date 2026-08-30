@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aazhiyam AI - Digital Twin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/twin.css">
+</head>
+<body>
+
+<div id="scene-container"></div>
+
+<div id="top-ui">
+  <div id="title-tag">
+    <h1>Aazhiyam AI</h1>
+    <p>Underwater acoustic digital twin</p>
+  </div>
+
+  <div id="topbar">
+    <div id="legend" class="panel">
+      <h3>Noise footprint</h3>
+      <div class="legend-row"><span class="legend-dot" style="background:#ff3333; color:#ff3333;"></span>High vessel noise</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#ffd700; color:#ffd700;"></span>Medium vessel noise</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#32ff64; color:#32ff64;"></span>Low vessel noise</div>
+    </div>
+
+    <div id="marine-panel" class="panel">
+      <h3>Species in this corridor</h3>
+      <div class="species-row">
+        <div class="species-chip"><span class="species-dot"></span>Bottlenose dolphin</div>
+        <div class="species-chip"><span class="species-dot"></span>Dugong</div>
+        <div class="species-chip"><span class="species-dot"></span>Pilot whale</div>
+        <div class="species-chip"><span class="species-dot"></span>Sperm whale</div>
+      </div>
+    </div>
+
+    <div id="metrics" class="panel">
+      <h3>Live metrics</h3>
+      <div class="metric-row"><span>Vessels tracked</span><span id="m-count">3</span></div>
+      <div class="metric-row"><span>Avg speed</span><span id="m-speed">12.7 kn</span></div>
+      <div class="metric-row"><span>Loudest source</span><span id="m-loud">Container ship</span></div>
+      <div class="metric-row"><span>Corridor status</span><span class="metric-badge" id="m-status" style="background:rgba(255,51,51,0.18); color:#ff8080;">Elevated</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+
+<div id="hint">Drag to orbit - scroll to zoom - click a vessel to focus</div>
+
+<div id="timeline" class="panel">
+  <div id="play-btn">&#9654;</div>
+  <input type="range" id="time-slider" min="0" max="100" value="0">
+  <div id="timeline-label">00:00</div>
+</div>
+
+<script src="js/three.min.js"></script>
+<script src="js/OrbitControls.js"></script>
+<script src="js/twin.js"></script>
+
+</body>
+</html>
