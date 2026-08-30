@@ -2,21 +2,25 @@ import os
 import json
 from datetime import datetime
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from dotenv import load_dotenv
-import google.generativeai as genai
+from openai import OpenAI
 
 load_dotenv()
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 PORT = int(os.getenv("PORT", 5000))
 
 app = Flask(__name__)
 CORS(app)
 
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-3.6-flash")
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY,
+)
+
+OPENROUTER_MODEL = "mistralai/mistral-7b-instruct:free"
 
 SYSTEM_PROMPT = """You are a maritime acoustic advisor for Aazhiyam-AI.
 Give short, specific, numeric recommendations for reducing underwater noise in sensitive ocean zones.
@@ -43,7 +47,7 @@ def load_scenario(scenario_id):
 
 @app.route("/")
 def home():
-    return "Aazhiyam-AI backend running ✅"
+    return render_template("index.html")
 
 
 @app.route("/api/chat", methods=["POST"])
@@ -57,9 +61,7 @@ def chat():
 
         scenario = load_scenario(scenario_id)
 
-        prompt = f"""{SYSTEM_PROMPT}
-
-Current scenario data:
+        user_prompt = f"""Current scenario data:
 {json.dumps(scenario)}
 
 User question:
@@ -67,12 +69,19 @@ User question:
 """
 
         try:
-            result = model.generate_content(prompt)
-            answer = result.text
-            source = "gemini"
+            result = client.chat.completions.create(
+                model=OPENROUTER_MODEL,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": user_prompt}
+                ],
+                max_tokens=200
+            )
+            answer = result.choices[0].message.content
+            source = "openrouter"
 
-        except Exception as gemini_error:
-            print("Gemini error:", gemini_error)
+        except Exception as or_error:
+            print("OpenRouter error:", or_error)
 
             answer = FALLBACK_RESPONSES.get(
                 scenario_id,
@@ -80,7 +89,7 @@ User question:
             )
 
             source = "fallback"
-            debug_error = str(gemini_error)
+            debug_error = str(or_error)
 
         return jsonify({
             "answer": answer,

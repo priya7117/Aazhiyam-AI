@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aazhiyam-AI Copilot</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0a2540, #0f4c75);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .app {
+    width: 420px;
+    height: 640px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .header {
+    background: #0f4c75;
+    color: white;
+    padding: 18px;
+    text-align: center;
+  }
+  .header h2 { margin: 0; font-size: 18px; }
+  .header p { margin: 4px 0 0; font-size: 12px; opacity: 0.8; }
+  .scenario-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px;
+    background: #f0f4f8;
+    border-bottom: 1px solid #ddd;
+  }
+  .scenario-bar button {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-radius: 8px;
+    background: #dbe7f2;
+    color: #0f4c75;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .scenario-bar button.active {
+    background: #0f4c75;
+    color: white;
+  }
+  .messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    background: #f7fafc;
+  }
+  .msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .bot {
+    background: #e3edf7;
+    color: #14324f;
+    border-bottom-left-radius: 4px;
+  }
+  .user {
+    background: #0f4c75;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+  }
+  .source-tag {
+    display: inline-block;
+    font-size: 10px;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.08);
+  }
+  .input-bar {
+    display: flex;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+    background: white;
+  }
+  .input-bar input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+  }
+  .input-bar button {
+    margin-left: 8px;
+    background: #0f4c75;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .input-bar button:disabled { opacity: 0.5; cursor: default; }
+  .typing { font-style: italic; color: #888; font-size: 13px; padding: 0 16px 10px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="header">
+    <h2>🌊 Aazhiyam-AI Copilot</h2>
+    <p>Quiet-path advisor for maritime noise reduction</p>
+  </div>
+
+  <div class="scenario-bar">
+    <button class="scenario-btn active" data-id="scenario-A">Gulf of Kutch</button>
+    <button class="scenario-btn" data-id="scenario-B">Palk Bay</button>
+    <button class="scenario-btn" data-id="scenario-C">Andaman Sea</button>
+  </div>
+
+  <div class="messages" id="messages">
+    <div class="msg bot">Hi! I'm your maritime acoustic advisor. Ask me how to reduce underwater noise for the selected zone.</div>
+  </div>
+
+  <div class="typing" id="typing" style="display:none;">Copilot is thinking...</div>
+
+  <div class="input-bar">
+    <input type="text" id="userInput" placeholder="Ask about noise reduction..." />
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+<script>
+  // Change this if your backend runs on a different host/port
+  const BACKEND_URL = "http://127.0.0.1:5000";
+
+  let currentScenario = "scenario-A";
+  let lastAnswer = "";
+
+  const messagesEl = document.getElementById("messages");
+  const inputEl = document.getElementById("userInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const typingEl = document.getElementById("typing");
+
+  document.querySelectorAll(".scenario-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".scenario-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentScenario = btn.dataset.id;
+      addMessage(`Switched to ${btn.textContent} scenario.`, "bot");
+    });
+  });
+
+  function addMessage(text, who, sourceTag) {
+    const div = document.createElement("div");
+    div.className = "msg " + who;
+    div.textContent = text;
+    if (sourceTag) {
+      const tag = document.createElement("div");
+      tag.className = "source-tag";
+      tag.textContent = sourceTag === "fallback" ? "⚙️ Offline-safe response" : "🤖 Live AI";
+      div.appendChild(tag);
+    }
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const question = inputEl.value.trim();
+    if (!question) return;
+
+    addMessage(question, "user");
+    inputEl.value = "";
+    sendBtn.disabled = true;
+    typingEl.style.display = "block";
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ scenarioId: currentScenario, question })
+      });
+      const data = await res.json();
+
+      lastAnswer = data.answer || "No response received.";
+      addMessage(lastAnswer, "bot", data.responseSource);
+    } catch (err) {
+      addMessage("⚠️ Could not reach backend. Is app.py running on " + BACKEND_URL + "?", "bot");
+    } finally {
+      sendBtn.disabled = false;
+      typingEl.style.display = "none";
+      inputEl.focus();
+    }
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+  inputEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>
+
+</body>
+</html>
